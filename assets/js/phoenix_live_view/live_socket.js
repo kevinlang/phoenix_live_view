@@ -504,9 +504,9 @@ export default class LiveSocket {
     // enter failsafe reload if server has gone away intentionally, such as "disconnect" broadcast
     this.socket.onClose(event => {
       // unload when navigating href or form submit (such as for firefox)
-      if(event && event.code === 1001){ return this.unload() }
+      // if(event && event.code === 1001){ return this.unload() }
       // failsafe reload if normal closure and we still have a main LV
-      if(event && event.code === 1000 && this.main){ return this.reloadWithJitter(this.main) }
+      if(event && (event.code === 1000 || event.code === 1001) && this.main){ return this.reloadWithJitter(this.main) }
     })
     document.body.addEventListener("click", function (){ }) // ensure all click events bubble for mobile Safari
     window.addEventListener("pageshow", e => {
